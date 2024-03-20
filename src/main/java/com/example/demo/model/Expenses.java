@@ -1,8 +1,11 @@
 package com.example.demo.model;
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Expenses {
-    
+
     private String id;
     private float amountToSpend;
     private float amountSpent;
