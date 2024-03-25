@@ -3,8 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Page de Connexion</title>
+
+    <style>
+        /* Styles de base pour la navbar */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+
 </head>
 <body>
+
+    <header>
+    <nav>
+        <div id="logo">
+            <a href="/">ManageYourBudget</a>
+        </div>
+    
+    </nav>
+</header>
 
 <div th:if="${param.error}">
     <p style="color: red;">Nom d'utilisateur ou mot de passe invalide.</p>
@@ -27,6 +60,11 @@
         <button type="submit">Se connecter</button>
     </div>
 </form>
+
+<footer>
+    <!-- Contenu du pied de page -->
+    <p>© 2024 Mon Entreprise</p>
+</footer>
 
 </body>
 </html>

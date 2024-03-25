@@ -33,6 +33,60 @@ public class Account {
         this.id = id;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        if (password == null || password.length() <= 6) {
+            throw new IllegalArgumentException("Le mot de passe doit contenir plus de 6 caractères.");
+        }
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.length() <= 2) {
+            throw new IllegalArgumentException("Le nom doit contenir plus de 2 caractères.");
+        }
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        if (lastname == null || lastname.length() <= 2) {
+            throw new IllegalArgumentException("Le nom doit contenir plus de 2 caractères.");
+        }
+        this.lastname = lastname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if (age < 18) {
+            throw new IllegalArgumentException("L'âge doit être supérieur à 18 ans.");
+        }
+        this.age = age;
+    }
+
+    
+
     public Account(String password, String email, String name, String lastname, int age) {
         this.password = password;
         this.email = email;
@@ -58,9 +112,7 @@ public class Account {
         if (!password.equals(repeatPassword)) {
             throw new IllegalArgumentException("Les mots de passe ne correspondent pas.");
         }
-        if (!password.contains("@")) {
-            throw new IllegalArgumentException("Le mot de passe doit contenir le caractère '@'.");
-        }
+       
         return new Account( password, email, name, lastname, age);
     }
 
