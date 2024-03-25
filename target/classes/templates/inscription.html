@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page d'Inscription</title>
+
+    <!-- Ajoutez vos styles CSS ici -->
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <!-- Votre barre de navigation ici -->
+    </nav>
+</header>
+
+<h2>Inscription</h2>
+<form th:action="@{/signup}" method="post">
+    
+    <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required />
+    </div>
+    <div class="form-group">
+        <label for="repeatPassword">Répétez le mot de passe :</label>
+        <input type="password" id="repeatPassword" name="repeatPassword" required />
+    </div>
+    <div class="form-group">
+        <label for="name">Prénom :</label>
+        <input type="text" id="name" name="name" required />
+    </div>
+    <div class="form-group">
+        <label for="lastname">Nom :</label>
+        <input type="text" id="lastname" name="lastname" required />
+    </div>
+    <div class="form-group">
+        <label for="age">Âge :</label>
+        <input type="number" id="age" name="age" required min="18" />
+    </div>
+    <div class="form-group">
+        <button type="submit">S'inscrire</button>
+    </div>
+    <p>Vous avez déjà un compte ? <a href="/login">Connectez-vous ici</a>.</p>
+</form>
+
+<footer>
+    <!-- Contenu du pied de page -->
+    <p>© 2024 Mon Entreprise</p>
+</footer>
+
+</body>
+</html>

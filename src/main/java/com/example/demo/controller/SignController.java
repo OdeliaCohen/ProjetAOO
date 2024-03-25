@@ -16,6 +16,12 @@ public class SignController {
         return "connexion"; // Le nom du template sans l'extension .html
     }
 
+    @GetMapping("/signup")
+    public String signup() {
+        return "inscription"; // Le nom du template sans l'extension .html
+        
+    }
+
     // Si vous voulez également gérer la déconnexion
     @GetMapping("/logout")
     public String logout() {
