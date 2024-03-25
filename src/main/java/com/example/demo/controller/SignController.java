@@ -4,28 +4,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Repository.SignRepository;
 import com.example.demo.model.Account;
 
 
 
-@Controller 
+@Controller
 public class SignController {
 
-    private final SignRepository signRepository;
-
-    @Autowired
-    public SignController(SignRepository signRepository) {
-        this.signRepository = signRepository;
-    }
-
-    @GetMapping("/bddAccount")
-    public List<Account> bddAccount(){
-        Account account1 = new Account();
-        signRepository.save(account1);
-        return signRepository.findAll();
-    }
 
     @GetMapping("/login")
     public String login() {
