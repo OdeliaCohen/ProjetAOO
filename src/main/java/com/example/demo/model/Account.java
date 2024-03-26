@@ -84,7 +84,6 @@ public class Account {
         }
         this.age = age;
     }
-
     
 
     public Account(String password, String email, String name, String lastname, int age) {
