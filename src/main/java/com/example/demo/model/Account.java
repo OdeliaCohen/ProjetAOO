@@ -13,6 +13,7 @@ public class Account {
     private Long id; 
 
     private String password;
+    private String repeatPassword;
     private String email;
     private String name;
     private String lastname;
@@ -43,6 +44,18 @@ public class Account {
         }
         this.password = password;
     }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        if (repeatPassword == null || repeatPassword.length() <= 6) {
+            throw new IllegalArgumentException("Le mot de passe doit contenir plus de 6 caractères.");
+        }
+        this.repeatPassword = repeatPassword;
+    }
+    
 
     public String getEmail() {
         return email;
