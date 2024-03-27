@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.metamodel.mapping.ForeignKeyDescriptor.Side;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.SignRepository;
@@ -38,6 +39,17 @@ public class AccountService {
             return account.getPassword().equals(password); // Vérifiez si le mot de passe correspond
         }
         return false; // Si aucun compte n'est trouvé avec cet email
+    }
+
+    public Account getAccountByEmail(String email) {
+        // Ici, nous supposons que accountRepository a une méthode findByEmail définie.
+        return signRepository.findByEmail(email).orElse(null); 
+        // Utilisez orElse(null) pour retourner un résultat null si aucun compte n'est trouvé.
+        // Cela pourrait également être géré en lançant une exception si le compte est requis.
+    }
+
+    public Account findAccountById(Long id) {
+        return signRepository.findById(id).orElse(null);
     }
        
 }

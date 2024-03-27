@@ -2,12 +2,106 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil</title>
+    <title>ManageBudget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .profile-selection {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .profile-selection h2 {
+            color: #333;
+        }
+        .profile-selection p {
+            font-size: 16px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenue sur notre site</h1>
-    
-    <p>Ceci est une page d'accueil simple utilisant Thymeleaf.</p>
-    
+    <div class="container">
+        <h1>Welcome !</h1>
+       
+         
+        
+        <div class="profile-selection">
+            <h2>My profile</h2>
+            <p>You have 5 different profiles:</p>
+            <ul>
+                <li>If you are a student and need help managing your budget, select this profile.</li>
+                <li>If you are a traveler and need guidance on budget management, select this profile.</li>
+                <li>If you are an investor and unsure where to allocate your budget, select this profile.</li>
+                <li>If you are a parent and need assistance with budgeting, select this profile.</li>
+                <li>If you are a couple and need guidance on budget management, select this profile.</li>
+            </ul>
+            <form th:action="@{/accueil}" method="post">
+            
+                <div class="form-group">
+                    <input type="hidden" th:value="${session.account.id}" name="id" />
+
+
+                    <label for="profileType">Profile type</label>
+                    <select id="profileType" name="profileType"> <!-- Ajout du attribut name ici (sans cela ça s'enregistre pas ds la bdd )-->
+                        <option value="student">Student</option>
+                        <option value="traveler">Traveler</option>
+                        <option value="investor">Investor</option>
+                        <option value="parent">Parent</option>
+                        <option value="couple">Couple</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="profileBudget">Profile budget</label>
+                    <input type="text" name="profileBudget"id="profileBudget" placeholder="Enter your budget in $...">
+                </div>
+                <div class="form-group">
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+        <div class="footer">
+            <p>You are logged if you want quit : ></span>
+                 <a href="/login">Logout</a>
+                
+        </div>
+    </div>
 </body>
 </html>

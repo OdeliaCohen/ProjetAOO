@@ -1,7 +1,11 @@
 package com.example.demo.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -11,6 +15,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; 
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    private List<Profile> profiles;
+
 
     private String password;
     private String repeatPassword;
