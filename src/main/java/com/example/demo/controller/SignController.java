@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ProfileService;
+import com.example.demo.service.ExpensesCService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 import com.example.demo.model.Account;
+import com.example.demo.model.Expenses;
+import com.example.demo.model.ExpensesCategory;
 import com.example.demo.model.Profile;
 
 @Controller
@@ -24,10 +27,12 @@ public class SignController {
 
     private AccountService accountService;
     private ProfileService profileService;
+    private ExpensesCService expensesCService;
 
-    public SignController(AccountService accountService , ProfileService profileService) {
+    public SignController(AccountService accountService , ProfileService profileService, ExpensesCService expensesCService) {
         this.accountService = accountService;
         this.profileService = profileService;
+        this.expensesCService = expensesCService;
     }
 
     @GetMapping("/login")
@@ -84,27 +89,35 @@ public class SignController {
         return "accueil";
     }
 
-   @Transactional
-   @PostMapping("/accueil")
-public String postProfile(@ModelAttribute Profile profile, @RequestParam("id") Long id, Model model) {
-    if (id != null) {
-        Account account = accountService.findAccountById(id);
-        if (account != null) {
-            Profile newProfile = new Profile(); // Créer un nouvel objet Profile
-            newProfile.setProfileType(profile.getProfileType());
-            newProfile.setProfileBudget(profile.getProfileBudget());
-            newProfile.setAccount(account); // Associer le profil au compte
-            account.getProfiles().add(newProfile); // Ajouter le nouveau profil à la liste
-            profileService.saveProfile(newProfile); // Sauvegarder le nouveau profil
+    @Transactional
+    @PostMapping("/accueil")
+    public String postProfile(@ModelAttribute Profile profile, Expenses expenses, @RequestParam("id") Long id, @RequestParam("categoryName") String categoryName, Model model) {
+        if (id != null) {
+            Account account = accountService.findAccountById(id);
+            if (account != null) {
+                Profile newProfile = new Profile(); // Créer un nouvel objet Profile
+                newProfile.setProfileType(profile.getProfileType());
+                newProfile.setProfileBudget(profile.getProfileBudget());
+                newProfile.setAccount(account); // Associer le profil au compte
+                account.getProfiles().add(newProfile); // Ajouter le nouveau profil à la liste
+                profileService.saveProfile(newProfile); // Sauvegarder le nouveau profil
+                
+                // Créer un nouvel objet ExpensesCategory et lui attribuer le nom de la catégorie
+                ExpensesCategory expensesCategory = new ExpensesCategory(categoryName);
+                expensesCService.saveCategory(expensesCategory); // Sauvegarder la nouvelle catégorie d'expenses
+    
+            } else {
+                model.addAttribute("error", "Compte non trouvé.");
+                return "accueil";
+            }
         } else {
-            model.addAttribute("error", "Compte non trouvé.");
+            model.addAttribute("error", "ID de compte manquant.");
             return "accueil";
         }
-    } else {
-        model.addAttribute("error", "ID de compte manquant.");
-        return "accueil";
+    
+        return "redirect:/accueil";
     }
+    
 
-    return "redirect:/accueil";
-}
+
 }
