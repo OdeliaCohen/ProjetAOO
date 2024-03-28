@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Profile {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
+     @JsonBackReference
     private Account account;
 
     public Profile() {

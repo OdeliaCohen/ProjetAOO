@@ -51,5 +51,10 @@ public class AccountService {
     public Account findAccountById(Long id) {
         return signRepository.findById(id).orElse(null);
     }
-       
+
+    public void saveAccount(Account account) {
+        signRepository.save(account);
+    }
+
+  
 }

@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import com.example.demo.service.AccountService;
 import com.example.demo.service.ProfileService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 import com.example.demo.model.Account;
 import com.example.demo.model.Profile;
@@ -79,24 +83,28 @@ public class SignController {
     public String accueil() {
         return "accueil";
     }
-    @PostMapping("/accueil")
-    public String postProfile(@ModelAttribute Profile profile, @RequestParam("id") Long id, Model model) {
-        // Récupérer l'Account à partir de l'ID et l'associer au Profile
-        if (id != null) {
-            Account account = accountService.findAccountById(id);
-            if (account != null) {
-                profile.setAccount(account); // Associer le profil au compte
-                profileService.saveProfile(profile); // Sauvegarder le profil
-            } else {
-                model.addAttribute("error", "Compte non trouvé.");
-                return "accueil";
-            }
+
+   @Transactional
+   @PostMapping("/accueil")
+public String postProfile(@ModelAttribute Profile profile, @RequestParam("id") Long id, Model model) {
+    if (id != null) {
+        Account account = accountService.findAccountById(id);
+        if (account != null) {
+            Profile newProfile = new Profile(); // Créer un nouvel objet Profile
+            newProfile.setProfileType(profile.getProfileType());
+            newProfile.setProfileBudget(profile.getProfileBudget());
+            newProfile.setAccount(account); // Associer le profil au compte
+            account.getProfiles().add(newProfile); // Ajouter le nouveau profil à la liste
+            profileService.saveProfile(newProfile); // Sauvegarder le nouveau profil
         } else {
-            model.addAttribute("error", "ID de compte manquant.");
+            model.addAttribute("error", "Compte non trouvé.");
             return "accueil";
         }
-        
-        return "redirect:/accueil";
+    } else {
+        model.addAttribute("error", "ID de compte manquant.");
+        return "accueil";
     }
-    
+
+    return "redirect:/accueil";
+}
 }

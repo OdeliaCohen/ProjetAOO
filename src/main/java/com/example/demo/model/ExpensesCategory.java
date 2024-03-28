@@ -24,6 +24,8 @@ public class ExpensesCategory {
         this.id = id;
     }
 
+
+
     public ExpensesCategory( String categoryName) {
         this.categoryName = categoryName;
     }

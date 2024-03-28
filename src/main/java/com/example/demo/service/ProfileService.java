@@ -16,9 +16,12 @@ public class ProfileService {
     }
 
     public void saveProfile(Profile profile) {
-        profileRepository.save(profile);
+        if (profile.getId() == null) {
+            profileRepository.save(profile); // Persiste une nouvelle entité
+        } else {
+            profileRepository.saveAndFlush(profile); // Merge l'entité détachée et force la synchronisation
+        }
     }
-
     public List<Profile> findAllProfiles() {
         return profileRepository.findAll();
     }
