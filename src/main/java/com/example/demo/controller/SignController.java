@@ -88,23 +88,21 @@ public class SignController {
     public String accueil() {
         return "accueil";
     }
-
     @Transactional
     @PostMapping("/accueil")
-    public String postProfile(@ModelAttribute Profile profile, Expenses expenses, @RequestParam("id") Long id, @RequestParam("categoryName") String categoryName, Model model) {
+    public String postProfile(@ModelAttribute Profile profileData, @RequestParam("id") Long id, @RequestParam("categoryName") String categoryName, Model model) {
         if (id != null) {
             Account account = accountService.findAccountById(id);
             if (account != null) {
                 Profile newProfile = new Profile(); // Créer un nouvel objet Profile
-                newProfile.setProfileType(profile.getProfileType());
-                newProfile.setProfileBudget(profile.getProfileBudget());
+                newProfile.setProfileType(profileData.getProfileType());
+                newProfile.setProfileBudget(profileData.getProfileBudget());
                 newProfile.setAccount(account); // Associer le profil au compte
-                account.getProfiles().add(newProfile); // Ajouter le nouveau profil à la liste
-                profileService.saveProfile(newProfile); // Sauvegarder le nouveau profil
+                profileService.saveProfile(newProfile); // Sauvegarder le nouveau profil avant d'ajouter les catégories
                 
-                // Créer un nouvel objet ExpensesCategory et lui attribuer le nom de la catégorie
-                ExpensesCategory expensesCategory = new ExpensesCategory(categoryName);
-                expensesCService.saveCategory(expensesCategory); // Sauvegarder la nouvelle catégorie d'expenses
+                ExpensesCategory expensesCategory = new ExpensesCategory(categoryName, newProfile);
+                newProfile.getExpensesCategories().add(expensesCategory); // Ajouter la catégorie au profil
+                expensesCService.saveCategory(expensesCategory); // Sauvegarder la nouvelle catégorie d'expenses avec la relation
     
             } else {
                 model.addAttribute("error", "Compte non trouvé.");

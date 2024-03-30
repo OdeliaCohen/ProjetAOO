@@ -1,13 +1,19 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Profile {
@@ -22,8 +28,26 @@ public class Profile {
      @JsonBackReference
     private Account account;
 
-    public Profile() {
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ExpensesCategory> expensesCategories;
+
+     public Profile() {
+        this.expensesCategories = new ArrayList<>(); // Initialisation de la liste
     }
+
+
+
+    public List<ExpensesCategory> getExpensesCategories() {
+        return expensesCategories;
+    }
+
+    
+
+    public void setExpensesCategories(List<ExpensesCategory> expensesCategories) {
+        this.expensesCategories = expensesCategories;
+    }
+
 
     public Account getAccount() {
         return account;
