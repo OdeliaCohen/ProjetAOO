@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.ProfileRepository;
+import com.example.demo.model.Account;
 import com.example.demo.model.Profile;
 
 @Service
@@ -25,6 +28,10 @@ public class ProfileService {
     public List<Profile> findAllProfiles() {
         return profileRepository.findAll();
     }
+
+  
+
+   
 
 
     

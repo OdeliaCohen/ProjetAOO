@@ -113,7 +113,7 @@ public class SignController {
             return "accueil";
         }
     
-        return "redirect:/accueil";
+        return "redirect:/chart";
     }
     
 

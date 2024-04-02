@@ -10,6 +10,6 @@ import com.example.demo.model.Account;
 public interface SignRepository extends JpaRepository<Account, Long>{
 
     Optional<Account> findByEmail(String email);
-    Account findAccountById(Long id);
+
     
 }

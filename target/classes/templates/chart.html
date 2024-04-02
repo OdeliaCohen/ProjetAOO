@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Diagramme des Dépenses</title>
+    <style>
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+            align-items: flex-end;
+            position: relative;
+            height: 240px;
+            width: 700px;
+        }
+        .axis-horizontal {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            bottom: 20px;
+        }
+        .axis-vertical {
+            height: 200px;
+            width: 2px;
+            background-color: black;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+        }
+        .bars-container {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 40px;
+            width: calc(100% - 4px);
+            margin-left: 4px;
+            position: absolute;
+            bottom: 20px;
+        }
+        .bar {
+            width: 14%;
+            height: 100px;
+            background-color: #4CAF50;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .bar span {
+            margin-bottom: 5px;
+        }
+        .day-label {
+            width: 14%;
+            text-align: center;
+        }
+        .additional-axis-horizontal {
+            height: 2px;
+            background-color: black;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Diagramme des Dépenses par Catégorie</h2>
+
+<div class="chart-container">
+    <div class="bars-container">
+        <div th:each="category, iterStat : ${#strings.listSplit(expensesCategories[0].categoryName, ',')}" class="bar">
+            <span th:text="${category}">Catégorie</span>
+        </div>
+    </div>
+    <div class="axis-horizontal">
+        <div class="day-label">Lundi</div>
+        <div class="day-label">Mardi</div>
+        <div class="day-label">Mercredi</div>
+        <div class="day-label">Jeudi</div>
+        <div class="day-label">Vendredi</div>
+        <div class="day-label">Samedi</div>
+        <div class="day-label">Dimanche</div>
+    </div>
+    <div class="additional-axis-horizontal"></div>
+    <div class="axis-vertical"></div>
+</div>
+
+<div style="position: relative; width: 700px;">
+    <div th:text="${profileBudget}" style="position: absolute; left: 0; bottom: 260px;">Budget</div>
+</div>
+
+</body>
+</html>
