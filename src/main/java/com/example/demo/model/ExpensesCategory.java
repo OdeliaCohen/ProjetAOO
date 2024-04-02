@@ -17,6 +17,7 @@ public class ExpensesCategory {
     private Long id; 
     private String categoryName;
 
+
     @ManyToOne
     @JoinColumn(name = "profile_id") // This column will link back to the Profile entity
     @JsonBackReference
@@ -27,6 +28,7 @@ public class ExpensesCategory {
     public ExpensesCategory(String categoryName, Profile profile) {
         this.categoryName = categoryName;
         this.profile = profile;
+        
     }
 
     // Constructeur par défaut
@@ -58,11 +60,11 @@ public class ExpensesCategory {
         this.categoryName = categoryName;
     }
 
-   
     public ExpensesCategory createCategory(String id, String categoryName) { 
         return new ExpensesCategory(categoryName, profile);
     }
-    
+
+
     
     
 }

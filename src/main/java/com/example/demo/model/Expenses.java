@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Expenses {
@@ -16,6 +18,11 @@ public class Expenses {
     private float amountSpent;
     private Date spendDay;
 
+
+    @ManyToOne
+    @JoinColumn(name = "category_id") // Cette colonne fera le lien avec l'entité ExpensesCategory
+    private ExpensesCategory category;
+
     public Expenses() {
     }
 
@@ -23,6 +30,40 @@ public class Expenses {
     public Long getId() {
         return id;
     }
+
+    public float getAmountToSpend() {
+        return amountToSpend;
+    }
+
+    public void setAmountToSpend(float amountToSpend) {
+        this.amountToSpend = amountToSpend;
+    }
+
+    public float getAmountSpent() {
+        return amountSpent;
+    }
+
+    public void setAmountSpent(float amountSpent) {
+        this.amountSpent = amountSpent;
+    }
+
+    public Date getSpendDay() {
+        return spendDay;
+    }
+
+    public void setSpendDay(Date spendDay) {
+        this.spendDay = spendDay;
+    }
+
+    public ExpensesCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ExpensesCategory category) {
+        this.category = category;
+    }
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -44,5 +85,7 @@ public class Expenses {
     public float calculerDepenseJour(){
         return amountSpent;
     }
+
+    
     
 }

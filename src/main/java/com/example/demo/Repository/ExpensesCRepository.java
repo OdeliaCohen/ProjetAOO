@@ -13,6 +13,10 @@ public interface ExpensesCRepository extends JpaRepository<ExpensesCategory, Lon
     
     
     List<ExpensesCategory> findAll();
+
+    ExpensesCategory findByCategoryName(String categoryName);
+
+    
    
     
 

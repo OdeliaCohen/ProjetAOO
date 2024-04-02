@@ -28,6 +28,7 @@ public class ChartController {
         if (profile != null) {
             model.addAttribute("profileBudget", profile.getProfileBudget());
             model.addAttribute("expensesCategories", expensesCategories);
+
         } else {
             // Gestion du cas où le profil n'est pas trouvé
         }
@@ -35,3 +36,9 @@ public class ChartController {
         return "chart";
     }
 }
+
+
+
+
+
+

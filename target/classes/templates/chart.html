@@ -7,7 +7,7 @@
             display: flex;
             flex-direction: column;
             margin-top: 50px;
-            align-items: flex-end;
+            align-items: center;
             position: relative;
             height: 240px;
             width: 700px;
@@ -26,6 +26,12 @@
             position: absolute;
             bottom: 20px;
             left: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .axis-value {
+            position: absolute;
+            right: -20px;
         }
         .bars-container {
             display: flex;
@@ -59,13 +65,40 @@
             bottom: 0;
             width: 100%;
         }
+        .day-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            width: 700px;
+            margin-top: 20px;
+        }
+        .day-buttons-container input {
+            width: 100px;
+            margin-right: 10px;
+        }
+        .centerdiv{
+            display: flex;
+            justify-content: center;
+        }
+        .divcenter{
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+        }
+        .half-budget {
+            margin-top: 100px;
+            margin-right: 40px;
+        }
+        .total-budget {
+            margin-right: 40px;
+        }
+       
     </style>
 </head>
 <body>
 
-<h2>Diagramme des Dépenses par Catégorie</h2>
-
-<div class="chart-container">
+<h2 style="text-align: center;">Diagramme des Dépenses par Catégorie</h2>
+<div class="centerdiv">
+<div class="chart-container" >
     <div class="bars-container">
         <div th:each="category, iterStat : ${#strings.listSplit(expensesCategories[0].categoryName, ',')}" class="bar">
             <span th:text="${category}">Catégorie</span>
@@ -81,7 +114,38 @@
         <div class="day-label">Dimanche</div>
     </div>
     <div class="additional-axis-horizontal"></div>
-    <div class="axis-vertical"></div>
+    <div class="axis-vertical">
+        <span class="axis-value total-budget" th:text="${profileBudget}">Total</span>
+        <span class="axis-value half-budget" th:text="${profileBudget/2}">Budget/2</span>
+    </div>
+</div>
+</div>
+<div class="divcenter">
+<div class="day-buttons-container">
+    <div>
+        <label for="lundi">Lundi:</label>
+        <input type="number" id="lundi" name="lundi" value="${profileBudget/5}" min="0">
+    </div>
+    <div>
+        <label for="mardi">Mardi:</label>
+        <input type="number" id="mardi" name="mardi" value="${profileBudget/5}" min="0">
+    </div>
+    <div>
+        <label for="mercredi">Mercredi:</label>
+        <input type="number" id="mercredi" name="mercredi" value="${profileBudget/5}" min="0">
+    </div>
+    <div>
+        <label for="jeudi">Jeudi:</label>
+        <input type="number" id="jeudi" name="jeudi" value="${profileBudget/5}" min="0">
+    </div>
+    <div>
+        <label for="vendredi">Vendredi:</label>
+        <input type="number" id="vendredi" name="vendredi" value="${profileBudget/5}" min="0">
+    </div>
+    <div>
+        <input type="submit" id="ok" name="ok" value="OK" min="${profileBudget/5}" style="margin-top: 20px;">
+    </div>    
+</div>
 </div>
 
 <div style="position: relative; width: 700px;">
