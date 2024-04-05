@@ -13,6 +13,8 @@ import com.example.demo.model.Profile;
 public interface ProfileRepository extends JpaRepository<Profile, Long>{
 
     
+
+    
    
      
    

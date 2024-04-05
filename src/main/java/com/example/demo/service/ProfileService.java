@@ -25,13 +25,14 @@ public class ProfileService {
             profileRepository.saveAndFlush(profile); // Merge l'entité détachée et force la synchronisation
         }
     }
+
     public List<Profile> findAllProfiles() {
         return profileRepository.findAll();
     }
 
-  
-
-   
+    public Profile findProfileById(Long id) {
+        return profileRepository.findById(id).orElse(null);
+    }
 
 
     

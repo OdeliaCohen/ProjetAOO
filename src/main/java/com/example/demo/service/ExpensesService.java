@@ -3,7 +3,10 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.demo.Repository.ExpensesCRepository;
 import com.example.demo.Repository.ExpensesRepository;
@@ -20,12 +23,16 @@ public class ExpensesService {
 
     private final ExpensesRepository expensesRepository;
     private final ExpensesCRepository expensesCRepository;
+    private final ProfileService profileService; // Ajout du ProfileService
+    private ExpensesCService expensesCService;
 
-    public ExpensesService(ExpensesRepository expensesRepository, ExpensesCRepository expensesCRepository) {
+    public ExpensesService(ExpensesRepository expensesRepository, ExpensesCRepository expensesCRepository, ProfileService profileService, ExpensesCService expensesCService) {
         this.expensesRepository = expensesRepository;
         this.expensesCRepository = expensesCRepository;
+        this.profileService = profileService; 
+        this.expensesCService = expensesCService;
+    
     }
-
     public void saveExpenses(Expenses expenses) {
         expensesRepository.save(expenses);
     }
@@ -63,21 +70,30 @@ public class ExpensesService {
         return expensesList;
     }
     @Transactional
-    public float calculateDailyExpense(float budget, List<ExpensesCategory> categories) {
-        // Calculer le budget par jour en fonction du nombre de catégories
-        float dailyBudget = budget / categories.size();
-    
-        // Calculer les dépenses totales par jour
-        float totalDailyExpense = 0;
-        for (ExpensesCategory category : categories) {
-            // Récupérer les dépenses pour la catégorie
-            List<Expenses> categoryExpenses = expensesRepository.findByCategory(category);
-            for (Expenses expense : categoryExpenses) {
-                totalDailyExpense += expense.getAmountSpent();
-            }
-        }
-    
-        return totalDailyExpense;
+    public Map<String, Map<String, Float>> calculateWeeklyBudget(float budget, List<ExpensesCategory> expensesCategoriesList) {
+        // Récupérer le premier profil et toutes les catégories
+        Profile profile = profileService.findAllProfiles().get(0);
+        List<ExpensesCategory> categories = expensesCService.findAllCategories();
+
+        return generateWeeklyBudget(profile.getProfileBudget(), categories);
     }
-    
+
+    public Map<String, Map<String, Float>> generateWeeklyBudget(float budget, List<ExpensesCategory> categories) {
+        int daysInWeek = 7;
+        float dailyBudget = budget / daysInWeek;
+        float dailyBudgetPerCategory = dailyBudget / categories.size();
+
+        Map<String, Map<String, Float>> weeklyBudget = new LinkedHashMap<>();
+        List<String> daysOfWeek = Arrays.asList("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi","Samedi", "Dimanche");
+
+        for (String day : daysOfWeek) {
+            Map<String, Float> dailyBudgets = new HashMap<>();
+            for (ExpensesCategory category : categories) {
+                dailyBudgets.put(category.getCategoryName(), dailyBudgetPerCategory);
+            }
+            weeklyBudget.put(day, dailyBudgets);
+        }
+
+        return weeklyBudget;
+    }
 }    

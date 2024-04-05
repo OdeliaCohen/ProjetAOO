@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ProfileService;
 import com.example.demo.service.ExpensesCService;
+import com.example.demo.service.ExpensesService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -28,11 +31,13 @@ public class SignController {
     private AccountService accountService;
     private ProfileService profileService;
     private ExpensesCService expensesCService;
+    private ExpensesService expensesService;
 
-    public SignController(AccountService accountService , ProfileService profileService, ExpensesCService expensesCService) {
+    public SignController(AccountService accountService , ProfileService profileService, ExpensesCService expensesCService, ExpensesService expensesService) {
         this.accountService = accountService;
         this.profileService = profileService;
         this.expensesCService = expensesCService;
+        this.expensesService = expensesService;
     }
 
     @GetMapping("/login")
@@ -90,7 +95,7 @@ public class SignController {
     }
     @Transactional
     @PostMapping("/accueil")
-    public String postProfile(@ModelAttribute Profile profileData, @RequestParam("id") Long id, @RequestParam("categoryName") String categoryName, Model model) {
+    public String postProfile(@ModelAttribute Profile profileData, @RequestParam("id") Long id, @RequestParam("categoryName") String categoryName, Model model,RedirectAttributes redirectAttributes) {
         if (id != null) {
             Account account = accountService.findAccountById(id);
             if (account != null) {
@@ -103,7 +108,8 @@ public class SignController {
                 ExpensesCategory expensesCategory = new ExpensesCategory(categoryName, newProfile);
                 newProfile.getExpensesCategories().add(expensesCategory); // Ajouter la catégorie au profil
                 expensesCService.saveCategory(expensesCategory); // Sauvegarder la nouvelle catégorie d'expenses avec la relation
-    
+                redirectAttributes.addAttribute("id", newProfile.getId());
+                redirectAttributes.addAttribute("categoryName", categoryName);
             } else {
                 model.addAttribute("error", "Compte non trouvé.");
                 return "accueil";
@@ -115,7 +121,6 @@ public class SignController {
     
         return "redirect:/chart";
     }
+
     
-
-
 }

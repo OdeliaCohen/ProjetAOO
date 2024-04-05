@@ -21,9 +21,13 @@ public class ExpensesCService {
         expensesCRepository.save(expensesCategory);
     }
 
-   public Iterable<ExpensesCategory> findAllCategories() { //on a mit Iterable car on a pas besoin de la taille de la liste
+   public java.util.List<ExpensesCategory> findAllCategories() { //on a mit Iterable car on a pas besoin de la taille de la liste
         return expensesCRepository.findAll();
     }
+
+public ExpensesCategory findCategoryByName(String categoryName) {
+    return expensesCRepository.findByCategoryName(categoryName);
+}
 
 
 

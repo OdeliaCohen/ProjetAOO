@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,8 @@ public class BddController {
     public BddController(AccountService accountService, ProfileService profileService, ExpensesCService expensesCService, ExpensesService expensesService) {
         this.accountService = accountService;
         this.profileService = profileService;
-        this.expensesCService = expensesCService;
         this.expensesService = expensesService;
+        this.expensesCService = expensesCService;
     }
 
 
@@ -41,26 +42,34 @@ public class BddController {
         return accountService.findAllAccounts(); // Assurez-vous que cette méthode existe dans AccountService
     }
 
+    @GetMapping("/bddProfile")
+    public List<Profile> bddProfile(){
+        return profileService.findAllProfiles(); // Assurez-vous que cette méthode existe dans ProfileService
+    }
     @GetMapping("/bddExpensesCategory")
     public Iterable<ExpensesCategory> bddExpensesCategory(){
         return expensesCService.findAllCategories(); // Assurez-vous que cette méthode existe dans ExpensesCService
     }
 
-    @GetMapping("/bddExpenses")
+     @GetMapping("/bddExpenses")
     public List<Expenses> bddExpenses(){
         Profile profile = profileService.findAllProfiles().get(0); // Assurez-vous que cette méthode existe dans ProfileService
         expensesService.calculateAndSaveExpensesFromBudget(profile); // Assurez-vous que cette méthode existe dans ExpensesService
         return expensesService.findAllExpenses(); // Cette ligne retournera la liste des dépenses
     }
-    
+
     @GetMapping("/calculateDailyExpense")
-    public float calculateDailyExpense() {
+    public Map<String, Map<String, Float>> calculateDailyExpense() {
         Profile profile = profileService.findAllProfiles().get(0);
         Iterable<ExpensesCategory> expensesCategoriesIterable = expensesCService.findAllCategories();
         List<ExpensesCategory> expensesCategoriesList = new ArrayList<>();
         expensesCategoriesIterable.forEach(expensesCategoriesList::add);
         float budget = profile.getProfileBudget();
-        return expensesService.calculateDailyExpense(budget, expensesCategoriesList);
+        return expensesService.calculateWeeklyBudget(budget, expensesCategoriesList);
     }
 }
+  
+
+
+
 
