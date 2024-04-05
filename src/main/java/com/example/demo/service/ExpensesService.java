@@ -81,7 +81,7 @@ public class ExpensesService {
     public Map<String, Map<String, Float>> generateWeeklyBudget(float budget, List<ExpensesCategory> categories) {
         int daysInWeek = 7;
         float dailyBudget = budget / daysInWeek;
-        float dailyBudgetPerCategory = dailyBudget / categories.size();
+        float dailyBudgetPerCategory = dailyBudget/5; // 5 catégories obligatoires
 
         Map<String, Map<String, Float>> weeklyBudget = new LinkedHashMap<>();
         List<String> daysOfWeek = Arrays.asList("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi","Samedi", "Dimanche");

@@ -35,6 +35,16 @@
     <div class="container">
         <h2 class="text-center">Inscription</h2>
         <form th:action="@{/signup}" method="post">
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Prénom" required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nom" required />
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="age" name="age" placeholder="Âge" required min="18" />
+            </div>
             <div class="form-group">
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
             </div>
@@ -45,19 +55,11 @@
             <div class="form-group">
                 <input type="password" class="form-control" id="repeatPassword" name="repeatPassword" placeholder="Répétez le mot de passe" required />
             </div>
-           
-            <div class="form-group">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Prénom" required />
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nom" required />
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" id="age" name="age" placeholder="Âge" required min="18" />
-            </div>
             <div th:if="${error}" class="alert alert-danger">
                 <p th:text="${error}"></p>
             </div>
+           
+          
            
             <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
         </form>

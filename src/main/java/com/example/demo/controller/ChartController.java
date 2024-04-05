@@ -5,18 +5,15 @@ import com.example.demo.service.ExpensesCService;
 import com.example.demo.service.ExpensesService;
 import com.example.demo.service.ProfileService;
 import com.example.demo.model.ExpensesCategory;
-import com.example.demo.Repository.ExpensesCRepository; // Assurez-vous que le chemin d'importation est correct
-import com.example.demo.Repository.ProfileRepository; // Assurez-vous que le chemin d'importation est correct
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +40,7 @@ public class ChartController {
         }
     
         float profileBudget = profile.getProfileBudget();
-        float dailyBudget = profileBudget / 7;
+        float dailyBudget = profileBudget;
     
         List<ExpensesCategory> categories = new ArrayList<>();
         ExpensesCategory category = expensesCService.findCategoryByName(categoryName);
