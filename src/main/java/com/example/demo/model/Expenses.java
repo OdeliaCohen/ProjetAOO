@@ -17,6 +17,8 @@ public class Expenses {
     private float amountToSpend;
     private float amountSpent;
     private Date spendDay;
+    private float amountSpentDay;
+    private float amountSpentPerCategory;
 
 
     @ManyToOne
@@ -69,22 +71,33 @@ public class Expenses {
         this.id = id;
     }
 
-    public Expenses(float amountToSpend, float amountSpent, Date spendDay) {
+    public float getAmountSpentDay() {
+        return amountSpentDay;
+    }
+
+    public void setAmountSpentDay(float amountSpentDay) {
+        this.amountSpentDay = amountSpentDay;
+    }
+
+    public float getAmountSpentPerCategory() {
+        return amountSpentPerCategory;
+    }
+
+    public void setAmountSpentPerCategory(float amountSpentPerCategory) {
+        this.amountSpentPerCategory = amountSpentPerCategory;
+    }
+
+
+
+
+    public Expenses(float amountToSpend, float amountSpent, Date spendDay, float amountSpentDay, float amountSpentPerCategory) {
         this.amountToSpend = amountToSpend;
         this.amountSpent = amountSpent;
         this.spendDay = spendDay;
+        this.amountSpentDay = amountSpentDay;
+        this.amountSpentPerCategory = amountSpentPerCategory;
     }
 
-    public boolean gererDepense(float amountSpent){
-        if(amountSpent <= amountToSpend){ // if the amount spent is less than or equal to the amount to spend
-            this.amountSpent += amountSpent;
-            return true;
-        }
-        return false;
-    }
-    public float calculerDepenseJour(){
-        return amountSpent;
-    }
 
     
     

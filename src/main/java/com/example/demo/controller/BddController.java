@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.example.demo.service.AccountService; // Assurez-vous que c'est bien importé
 import com.example.demo.service.ExpensesCService;
 import com.example.demo.service.ExpensesService;
@@ -53,22 +56,12 @@ public class BddController {
 
      @GetMapping("/bddExpenses")
     public List<Expenses> bddExpenses(){
-        Profile profile = profileService.findAllProfiles().get(0); // Assurez-vous que cette méthode existe dans ProfileService
-        expensesService.calculateAndSaveExpensesFromBudget(profile); // Assurez-vous que cette méthode existe dans ExpensesService
+        Profile profile = profileService.findAllProfiles().get(0); 
+        expensesService.calculateAndSaveExpensesFromBudget(profile);;
         return expensesService.findAllExpenses(); // Cette ligne retournera la liste des dépenses
     }
 
-    @GetMapping("/calculateDailyExpense")
-    public Map<String, Map<String, Float>> calculateDailyExpense() {
-        Profile profile = profileService.findAllProfiles().get(0);
-        Iterable<ExpensesCategory> expensesCategoriesIterable = expensesCService.findAllCategories();
-        List<ExpensesCategory> expensesCategoriesList = new ArrayList<>();
-        expensesCategoriesIterable.forEach(expensesCategoriesList::add);
-        float budget = profile.getProfileBudget();
-        return expensesService.calculateWeeklyBudget(budget, expensesCategoriesList);
-    }
 }
-  
 
 
 

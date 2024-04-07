@@ -43,32 +43,28 @@ public class ExpensesService {
     @Transactional
     public List<Expenses> calculateAndSaveExpensesFromBudget(Profile profile) {
         List<Expenses> expensesList = new ArrayList<>();
-    
+        float calculatedAmountSpentDay = profile.getProfileBudget() / 7;
+        float calculatedAmountSpentPerCategory = calculatedAmountSpentDay / 5;
         // Récupérer toutes les catégories
         List<ExpensesCategory> categories = expensesCRepository.findAll();
-        
-        // Vérifier si des catégories ont été trouvées
-        if (!categories.isEmpty()) {
-            // Calculer le budget par catégorie
-            float budgetPerCategory = profile.getProfileBudget() / categories.size();
-    
+       
             // Parcourir les catégories
             for (ExpensesCategory category : categories) {
                 Expenses expense = new Expenses();
-                expense.setAmountToSpend(budgetPerCategory);
+                expense.setAmountToSpend(profile.getProfileBudget());
                 expense.setAmountSpent(0);
                 expense.setSpendDay(new Date());
                 expense.setCategory(category);
-        
+                expense.setAmountSpentDay(calculatedAmountSpentDay);
+                expense.setAmountSpentPerCategory(calculatedAmountSpentPerCategory);
                 expensesRepository.save(expense);
                 expensesList.add(expense);
             }
-        } else {
-            System.out.println("Aucune catégorie trouvée.");
-        }
+
     
         return expensesList;
     }
+   
     @Transactional
     public Map<String, Map<String, Float>> calculateWeeklyBudget(float budget, List<ExpensesCategory> expensesCategoriesList) {
         // Récupérer le premier profil et toutes les catégories
@@ -81,7 +77,7 @@ public class ExpensesService {
     public Map<String, Map<String, Float>> generateWeeklyBudget(float budget, List<ExpensesCategory> categories) {
         int daysInWeek = 7;
         float dailyBudget = budget / daysInWeek;
-        float dailyBudgetPerCategory = dailyBudget/5; // 5 catégories obligatoires
+        float dailyBudgetPerCategory = dailyBudget/5;
 
         Map<String, Map<String, Float>> weeklyBudget = new LinkedHashMap<>();
         List<String> daysOfWeek = Arrays.asList("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi","Samedi", "Dimanche");
@@ -93,7 +89,23 @@ public class ExpensesService {
             }
             weeklyBudget.put(day, dailyBudgets);
         }
+        
+
+      
+       
+        
 
         return weeklyBudget;
     }
+
+    public boolean updateDailyBudget(String day, String categoryName, Float newBudget) {
+        // Logic to update the budget
+        // This could involve updating a database record or adjusting in-memory data structures
+        return true; // Return true if update was successful
+    }
+
+    
+
+
+   
 }    

@@ -4,12 +4,19 @@ import com.example.demo.model.Profile;
 import com.example.demo.service.ExpensesCService;
 import com.example.demo.service.ExpensesService;
 import com.example.demo.service.ProfileService;
-import com.example.demo.model.ExpensesCategory;
 
+import jakarta.transaction.Transactional;
+
+import com.example.demo.model.Expenses;
+import com.example.demo.model.ExpensesCategory;
+import com.example.demo.Repository.ExpensesCRepository; // Assurez-vous que le chemin d'importation est correct
+import com.example.demo.Repository.ProfileRepository; // Assurez-vous que le chemin d'importation est correct
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -58,5 +65,28 @@ public class ChartController {
     
         return "chart";
     }
+@Transactional
+    @PostMapping("/updateBudget")
+    public String updateBudget(@RequestParam("day") String day,
+                               @RequestParam("categoryName") String categoryName,
+                               @RequestParam("newBudget") Float newBudget,
+                               Model model,@RequestParam("id") Long id,ProfileService profileService) {
+        Profile profile = profileService.findProfileById(id);
+        if (profile == null) {
+            model.addAttribute("error", "Profil non trouvé.");
+            return "error";
+        }
+        boolean success = expensesService.updateDailyBudget(day, categoryName, newBudget);
+        if (!success) {
+            model.addAttribute("error", "Failed to update budget.");
+            return "error";
+        }
+        return "redirect:/chart"; // Redirect to the chart view with updated budget
+    }
+
+    
+    
+
+   
     
 }
