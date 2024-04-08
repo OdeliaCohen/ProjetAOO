@@ -63,7 +63,7 @@ public class ChartController {
     
         model.addAttribute("chartData", chartData);
     
-        return "chart";
+        return "chart"; 
     }
 @Transactional
     @PostMapping("/updateBudget")

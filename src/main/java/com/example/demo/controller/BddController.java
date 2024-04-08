@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -54,12 +55,15 @@ public class BddController {
         return expensesCService.findAllCategories(); // Assurez-vous que cette méthode existe dans ExpensesCService
     }
 
-     @GetMapping("/bddExpenses")
-    public List<Expenses> bddExpenses(){
-        Profile profile = profileService.findAllProfiles().get(0); 
-        expensesService.calculateAndSaveExpensesFromBudget(profile);;
-        return expensesService.findAllExpenses(); // Cette ligne retournera la liste des dépenses
+    @GetMapping("/bddExpenses")
+public ResponseEntity<List<Expenses>> bddExpenses() {
+    List<Expenses> expensesList = expensesService.findAllExpenses(); // This line fetches all expenses from the database
+    if (expensesList.isEmpty()) {
+        return ResponseEntity.noContent().build(); // Returns a 204 No Content if the list is empty
     }
+    return ResponseEntity.ok(expensesList); // Returns a 200 OK with the list of expenses
+}
+
 
 }
 
