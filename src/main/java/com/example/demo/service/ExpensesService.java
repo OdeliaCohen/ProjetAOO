@@ -71,7 +71,7 @@ public class ExpensesService {
         float dailyBudgetPerCategory = dailyBudget /5; 
     
         Map<String, Map<String, Float>> weeklyBudget = new LinkedHashMap<>();
-        List<String> daysOfWeek = Arrays.asList("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
+        List<String> daysOfWeek = Arrays.asList("Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday", "Sunday");
     
         // Create and save expenses only once per category
         for (ExpensesCategory category : categories) {
@@ -88,15 +88,20 @@ public class ExpensesService {
         return weeklyBudget;
     }
     
-    
-    
-    
 
-    public boolean updateDailyBudget(String day, String categoryName, Float newBudget) {
-        // Logic to update the budget
-        // This could involve updating a database record or adjusting in-memory data structures
-        return true; // Return true if update was successful
+    @Transactional
+public void updateSpending(Float amountSpentDay, Float amountSpentPerCategory) {
+    List<Expenses> expensesList = findAllExpenses();
+    for (Expenses expense : expensesList) {
+        expense.setAmountSpentDay(amountSpentDay);
+        expense.setAmountSpentPerCategory(amountSpentPerCategory);
+        saveExpenses(expense);
     }
+
+    // Recalculate the weekly budget with the new values
+    calculateWeeklyBudget(amountSpentDay * 7, expensesCService.findAllCategories());
+}
+
 
     
 
