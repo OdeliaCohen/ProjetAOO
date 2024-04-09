@@ -1,18 +1,10 @@
 package com.example.demo.controller;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.example.demo.service.AccountService; // Assurez-vous que c'est bien importé
+import com.example.demo.service.AccountService; 
 import com.example.demo.service.ExpensesCService;
 import com.example.demo.service.ExpensesService;
 import com.example.demo.service.ProfileService;
@@ -43,25 +35,25 @@ public class BddController {
     
     @GetMapping("/bddAccount")
     public List<Account> bddAccount(){
-        return accountService.findAllAccounts(); // Assurez-vous que cette méthode existe dans AccountService
+        return accountService.findAllAccounts(); 
     }
 
     @GetMapping("/bddProfile")
     public List<Profile> bddProfile(){
-        return profileService.findAllProfiles(); // Assurez-vous que cette méthode existe dans ProfileService
+        return profileService.findAllProfiles(); 
     }
     @GetMapping("/bddExpensesCategory")
     public Iterable<ExpensesCategory> bddExpensesCategory(){
-        return expensesCService.findAllCategories(); // Assurez-vous que cette méthode existe dans ExpensesCService
+        return expensesCService.findAllCategories(); 
     }
 
     @GetMapping("/bddExpenses")
 public ResponseEntity<List<Expenses>> bddExpenses() {
-    List<Expenses> expensesList = expensesService.findAllExpenses(); // This line fetches all expenses from the database
+    List<Expenses> expensesList = expensesService.findAllExpenses(); 
     if (expensesList.isEmpty()) {
-        return ResponseEntity.noContent().build(); // Returns a 204 No Content if the list is empty
+        return ResponseEntity.noContent().build(); 
     }
-    return ResponseEntity.ok(expensesList); // Returns a 200 OK with the list of expenses
+    return ResponseEntity.ok(expensesList); 
 }
 
 

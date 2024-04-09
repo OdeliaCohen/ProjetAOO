@@ -1,8 +1,5 @@
 package com.example.demo.service;
-
-import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.Repository.ExpensesCRepository;
 import com.example.demo.model.ExpensesCategory;
 

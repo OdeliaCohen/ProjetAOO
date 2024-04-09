@@ -1,9 +1,4 @@
 package com.example.demo.controller;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +6,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ProfileService;
 import com.example.demo.service.ExpensesCService;
 import com.example.demo.service.ExpensesService;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-
 import com.example.demo.model.Account;
-import com.example.demo.model.Expenses;
 import com.example.demo.model.ExpensesCategory;
 import com.example.demo.model.Profile;
 

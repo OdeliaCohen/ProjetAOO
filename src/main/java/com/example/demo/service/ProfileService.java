@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.ProfileRepository;
-import com.example.demo.model.Account;
+
 import com.example.demo.model.Profile;
 
 @Service
@@ -20,9 +20,9 @@ public class ProfileService {
 
     public void saveProfile(Profile profile) {
         if (profile.getId() == null) {
-            profileRepository.save(profile); // Persiste une nouvelle entité
+            profileRepository.save(profile); 
         } else {
-            profileRepository.saveAndFlush(profile); // Merge l'entité détachée et force la synchronisation
+            profileRepository.saveAndFlush(profile); 
         }
     }
 

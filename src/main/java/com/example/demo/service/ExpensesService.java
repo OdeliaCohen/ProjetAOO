@@ -1,19 +1,15 @@
 package com.example.demo.service;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.example.demo.Repository.ExpensesCRepository;
 import com.example.demo.Repository.ExpensesRepository;
 import com.example.demo.model.Expenses;
 import com.example.demo.model.ExpensesCategory;
 import com.example.demo.model.Profile;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
